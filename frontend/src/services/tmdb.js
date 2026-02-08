@@ -51,7 +51,7 @@ export const getMovieDetails = async (movieId) => {
 export const getTVDetails = async (tvId) => {
   const response = await tmdbApi.get(`/tv/${tvId}`, {
     params: {
-      append_to_response: 'videos,credits,similar,recommendations',
+      append_to_response: 'videos,credits,similar,recommendations,external_ids',
     },
   });
   return response.data;
