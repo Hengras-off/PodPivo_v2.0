@@ -126,22 +126,29 @@ export const KinoBDPlayer = ({ kinopoiskId: initialKinopoiskId, imdbId, title, y
               <div className="absolute inset-0 flex items-center justify-center bg-black">
                 <div className="text-center space-y-4">
                   <Loader2 className="w-12 h-12 animate-spin mx-auto text-brand-primary" />
-                  <p className="text-muted-foreground">Загрузка плеера...</p>
+                  <p className="text-muted-foreground">{statusMessage}</p>
                 </div>
               </div>
             )}
 
             {error && (
               <div className="absolute inset-0 flex items-center justify-center bg-black">
-                <div className="text-center space-y-4 p-8">
-                  <div className="w-16 h-16 mx-auto bg-red-500/20 rounded-full flex items-center justify-center">
-                    <X className="w-8 h-8 text-red-500" />
+                <div className="text-center space-y-4 p-8 max-w-lg">
+                  <div className="w-16 h-16 mx-auto bg-yellow-500/20 rounded-full flex items-center justify-center">
+                    <AlertCircle className="w-8 h-8 text-yellow-500" />
                   </div>
                   <h3 className="text-xl font-bold">Плеер недоступен</h3>
-                  <p className="text-muted-foreground max-w-md">
-                    К сожалению, для этого фильма не найдены источники для просмотра.
-                    {!kinopoiskId && <span className="block mt-2">ID Кинопоиска отсутствует.</span>}
+                  <p className="text-muted-foreground">
+                    К сожалению, для этого фильма не найдены источники для онлайн-просмотра.
                   </p>
+                  <div className="text-sm text-muted-foreground bg-white/5 p-4 rounded-lg">
+                    <p className="font-semibold mb-2">Возможные причины:</p>
+                    <ul className="text-left space-y-1">
+                      <li>• Фильм ещё не добавлен в базу KinoBD</li>
+                      <li>• Источники временно недоступны</li>
+                      <li>• Попробуйте посмотреть трейлер или добавить в список</li>
+                    </ul>
+                  </div>
                   <button
                     onClick={onClose}
                     className="mt-4 px-6 py-2 bg-brand-primary hover:bg-brand-hover rounded-md transition-colors"
