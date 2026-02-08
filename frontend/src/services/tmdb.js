@@ -42,7 +42,7 @@ export const searchMulti = async (query, page = 1) => {
 export const getMovieDetails = async (movieId) => {
   const response = await tmdbApi.get(`/movie/${movieId}`, {
     params: {
-      append_to_response: 'videos,credits,similar,recommendations',
+      append_to_response: 'videos,credits,similar,recommendations,external_ids',
     },
   });
   return response.data;
