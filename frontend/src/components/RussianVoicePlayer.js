@@ -13,95 +13,85 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
   // ПРОВЕРЕННЫЕ русские плееры с ОЗВУЧКОЙ
   const sources = [
     {
-      name: 'Kodik',
+      name: 'VidSrc (RU)',
       getUrl: () => {
-        // Kodik работает через iframe с поиском
-        const searchQuery = encodeURIComponent(title);
-        return `https://kodik.cc/search?q=${searchQuery}`;
-      },
-      directUrl: () => {
-        // Прямая ссылка через IMDB
-        if (imdbId) {
-          return `https://kodik.info/go/seria/${tmdbId}/hash/imdb/${imdbId}/`;
+        // VidSrc поддерживает русскую озвучку
+        if (tmdbId) {
+          return `https://vidsrc.me/embed/${mediaType}?tmdb=${tmdbId}&ds_lang=ru`;
         }
         return null;
       },
-      description: 'Самая большая база с русской озвучкой',
+      description: 'Русская озвучка и субтитры',
       icon: '🇷🇺',
       quality: 'HD/Full HD',
-      voiceovers: 'Множество студий озвучки'
+      voiceovers: 'Автоматическая озвучка на русском'
     },
     {
-      name: 'HDVB Player',
+      name: 'VidSrc.net (RU)',
       getUrl: () => {
-        // HDVB рабочий формат
-        if (imdbId) {
-          return `https://hdvb.tv/video/${imdbId}`;
-        } else if (tmdbId) {
-          return `https://hdvb.tv/video/tmdb-${tmdbId}`;
+        if (tmdbId) {
+          return `https://vidsrc.net/embed/${mediaType}/${tmdbId}?lang=ru`;
         }
         return null;
       },
-      description: 'HD качество, профессиональная озвучка',
+      description: 'Множество озвучек',
       icon: '🎬',
       quality: 'HD/Full HD',
-      voiceovers: '2-3 озвучки'
+      voiceovers: 'Русская озвучка'
     },
     {
-      name: 'Alloha',
+      name: 'Embed.su (RU)',
       getUrl: () => {
-        // Alloha для встраивания
-        if (imdbId) {
-          return `https://alloha.tv/?imdb=${imdbId}`;
-        } else if (tmdbId) {
-          return `https://alloha.tv/?tmdb=${tmdbId}`;
+        if (tmdbId) {
+          return `https://embed.su/embed/${mediaType}/${tmdbId}?lang=ru`;
         }
         return null;
       },
-      description: 'Русская озвучка аниме и фильмов',
-      icon: '🌸',
+      description: 'Стабильный источник',
+      icon: '📺',
       quality: 'HD',
-      voiceovers: 'Русская озвучка + субтитры'
+      voiceovers: 'Русская озвучка'
     },
     {
-      name: 'VideoCDN',
+      name: '2Embed (RU)',
       getUrl: () => {
-        // VideoCDN iframe
-        if (imdbId) {
-          return `https://videocdn.tv/video/${imdbId}`;
+        if (tmdbId) {
+          const type = mediaType === 'movie' ? 'embed' : 'embedtv';
+          return `https://www.2embed.cc/${type}/${tmdbId}?lang=ru`;
         }
         return null;
       },
-      description: 'CDN сеть России, быстрая загрузка',
+      description: 'Надежный плеер',
+      icon: '🎥',
+      quality: 'HD',
+      voiceovers: 'Русские субтитры и озвучка'
+    },
+    {
+      name: 'VidSrc.xyz (RU)',
+      getUrl: () => {
+        if (tmdbId) {
+          return `https://vidsrc.xyz/embed/${mediaType}?tmdb=${tmdbId}&lang=ru`;
+        }
+        return null;
+      },
+      description: 'Быстрая загрузка',
       icon: '⚡',
       quality: 'HD',
       voiceovers: 'Русская озвучка'
     },
     {
-      name: 'Collaps',
+      name: 'MultiEmbed (RU)',
       getUrl: () => {
-        // Collaps embed
-        if (imdbId) {
-          return `https://video.colapse.net/embed/${imdbId}`;
+        if (tmdbId) {
+          const type = mediaType === 'movie' ? 'movie' : 'tv';
+          return `https://multiembed.mov/?video_id=${tmdbId}&tmdb=1&${type}=1&lang=ru`;
         }
         return null;
       },
-      description: 'Стабильный источник с озвучкой',
-      icon: '📺',
+      description: 'Множество серверов с озвучкой',
+      icon: '🌐',
       quality: 'HD',
-      voiceovers: 'Несколько озвучек'
-    },
-    {
-      name: 'Плеер.Онлайн',
-      getUrl: () => {
-        // Универсальный агрегатор
-        const searchTitle = encodeURIComponent(title);
-        return `https://pleer.ru/embed?title=${searchTitle}&year=${year}`;
-      },
-      description: 'Агрегатор русских озвучек',
-      icon: '🎥',
-      quality: 'HD',
-      voiceovers: 'Все доступные озвучки'
+      voiceovers: 'Автоматический выбор озвучки'
     }
   ];
 
