@@ -15,6 +15,11 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
   const [kodikUrl, setKodikUrl] = useState(null);
   const [error, setError] = useState(null);
 
+  // Логируем входные данные для отладки
+  useEffect(() => {
+    console.log(`RussianVoicePlayer: tmdbId=${tmdbId}, imdbId=${imdbId}, title="${title}", year=${year}, mediaType=${mediaType}`);
+  }, [tmdbId, imdbId, title, year, mediaType]);
+
   // Поиск Kinopoisk ID через различные методы
   const findKinopoiskId = useCallback(async () => {
     setSearchingKp(true);
