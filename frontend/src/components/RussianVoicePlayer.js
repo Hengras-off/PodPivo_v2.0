@@ -290,9 +290,9 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
                 <div className="text-center space-y-4">
                   <Loader2 className="w-16 h-16 animate-spin text-brand-primary mx-auto" />
                   <div>
-                    <p className="text-lg font-semibold">Загрузка русской озвучки...</p>
+                    <p className="text-lg font-semibold">Загрузка...</p>
                     <p className="text-sm text-muted-foreground mt-2">
-                      {source.name} • {source.voiceovers}
+                      {currentSource?.name} • {currentSource?.voiceovers}
                     </p>
                   </div>
                 </div>
@@ -300,7 +300,7 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
             )}
 
             <iframe
-              key={embedUrl}
+              key={`${selectedSource}-${embedUrl}`}
               src={embedUrl}
               className="w-full h-full"
               frameBorder="0"
