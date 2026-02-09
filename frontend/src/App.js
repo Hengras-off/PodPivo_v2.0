@@ -41,8 +41,8 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <WatchlistProvider>
-          <HashRouter>
-            <div className="App min-h-screen">
+          <BrowserRouter basename={process.env.PUBLIC_URL}>
+  <div className="App min-h-screen">
               <Navbar 
                 onSearchClick={() => setSearchModalOpen(true)}
                 onAuthClick={() => setAuthModalOpen(true)}
@@ -65,7 +65,7 @@ function App() {
                 onClose={() => setSearchModalOpen(false)} 
               />
             </div>
-          </HashRouter>
+          </BrowserRouter>
         </WatchlistProvider>
       </AuthProvider>
     </ThemeProvider>
