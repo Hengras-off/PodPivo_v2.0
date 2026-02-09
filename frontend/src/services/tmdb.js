@@ -110,3 +110,42 @@ export const getReleaseYear = (item) => {
   const date = item.release_date || item.first_air_date;
   return date ? new Date(date).getFullYear() : null;
 };
+
+/**
+ * Получить Kinopoisk ID из external_ids
+ * Kinopoisk ID может быть в поле imdb_id если начинается с цифр
+ * или нужно искать через API
+ */
+export const getKinopoiskId = (externalIds) => {
+  // TMDB не предоставляет прямой Kinopoisk ID
+  // Но мы можем попробовать найти через дополнительное API
+  // Пока возвращаем null, будем использовать IMDB ID
+  return null;
+};
+
+/**
+ * Поиск Kinopoisk ID по IMDB ID через стороннее API
+ */
+export const fetchKinopoiskIdFromIMDB = async (imdbId) => {
+  if (!imdbId) return null;
+  
+  try {
+    // Используем бесплатное API для конвертации
+    const response = await axios.get(`https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-filters`, {
+      params: {
+        imdbId: imdbId
+      },
+      headers: {
+        'X-API-KEY': 'demo' // Используем demo ключ
+      }
+    });
+    
+    if (response.data && response.data.items && response.data.items.length > 0) {
+      return response.data.items[0].kinopoiskId?.toString();
+    }
+  } catch (error) {
+    console.log('Could not fetch Kinopoisk ID:', error.message);
+  }
+  
+  return null;
+};
