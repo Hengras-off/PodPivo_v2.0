@@ -101,7 +101,7 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
       setSearchingKp(false);
       return null;
     }
-  }, [imdbId, title, year]);
+    }, [imdbId, title, year, mediaType]);
 
   // При монтировании ищем Kinopoisk ID
   useEffect(() => {
