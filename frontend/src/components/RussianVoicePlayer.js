@@ -42,7 +42,7 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
         }
       }
 
-      // Метод 2: Поиск по названию и году
+      // Метод 2: Поиск по названию и году с учетом типа контента
       try {
         const searchTitle = title.replace(/[^\w\sа-яА-Я]/g, '').trim();
         const response = await axios.get(
@@ -55,13 +55,36 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
         );
         
         if (response.data?.films?.length > 0) {
-          // Ищем по году
-          const match = response.data.films.find(
-            f => f.year === year || f.year === String(year)
-          ) || response.data.films[0];
+          const films = response.data.films;
+          
+          // Фильтруем по типу: для movie ищем только фильмы, для tv - сериалы
+          const typeFilter = mediaType === 'movie' 
+            ? f => f.type === 'FILM' || !f.type
+            : f => f.type === 'TV_SERIES' || f.type === 'TV_SHOW' || f.type === 'MINI_SERIES';
+          
+          // Приоритет: точное совпадение по году + типу
+          let match = films.find(f => 
+            (f.year === year || f.year === String(year)) && typeFilter(f)
+          );
+          
+          // Если не нашли, ищем только по типу
+          if (!match) {
+            match = films.find(typeFilter);
+          }
+          
+          // Если все еще не нашли, берем первое совпадение по году
+          if (!match) {
+            match = films.find(f => f.year === year || f.year === String(year));
+          }
+          
+          // Последняя попытка - первый результат
+          if (!match) {
+            match = films[0];
+          }
           
           if (match?.filmId) {
             const kpId = match.filmId.toString();
+            console.log(`Found KP ID ${kpId} for "${title}" (${year}) - type: ${match.type}`);
             setKinopoiskId(kpId);
             setSearchingKp(false);
             return kpId;
