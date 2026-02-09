@@ -100,53 +100,6 @@ export const RussianPlayer = ({ imdbId, tmdbId, kinopoiskId, title, year, mediaT
       icon: '🔍',
       quality: 'HD/Full HD'
     }
-      description: 'CDN сеть, высокая скорость',
-      icon: '⚡',
-      quality: 'HD'
-    },
-    {
-      name: 'Filmix',
-      getUrl: () => {
-        if (kinopoiskId) {
-          return `https://filmix.ac/play/${kinopoiskId}`;
-        } else if (imdbId) {
-          return `https://filmix.ac/embed/${imdbId}`;
-        }
-        return null;
-      },
-      description: 'Большая база русских фильмов',
-      icon: '🎞️',
-      quality: 'HD/Full HD'
-    },
-    {
-      name: 'Alloha',
-      getUrl: () => {
-        if (imdbId) {
-          // Alloha лучше работает с IMDB
-          return `https://alloha.tv/?imdb=${imdbId}`;
-        } else if (kinopoiskId) {
-          return `https://alloha.tv/?kp=${kinopoiskId}`;
-        }
-        return null;
-      },
-      description: 'Популярный плеер, аниме',
-      icon: '🌸',
-      quality: 'HD'
-    },
-    {
-      name: 'Zetflix',
-      getUrl: () => {
-        if (kinopoiskId) {
-          return `https://zetflix.zone/embed/${kinopoiskId}`;
-        } else if (imdbId) {
-          return `https://zetflix.zone/embed/imdb/${imdbId}`;
-        }
-        return null;
-      },
-      description: 'Русская озвучка и субтитры',
-      icon: '🎭',
-      quality: 'HD'
-    }
   ];
 
   // Фильтруем доступные источники
