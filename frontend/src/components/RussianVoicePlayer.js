@@ -189,9 +189,6 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
     );
   }
 
-  const currentSource = availableSources[selectedSource];
-  const embedUrl = currentSource?.getUrl();
-
   return (
     <AnimatePresence>
       <motion.div
@@ -221,12 +218,12 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
               <h2 className="text-2xl md:text-3xl font-bold">{title} ({year})</h2>
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-muted-foreground">
-                  {currentSource?.icon} {currentSource?.name}
+                  {source.icon} {source.name}
                 </span>
                 <span className="text-brand-primary">•</span>
-                <span className="text-muted-foreground">{currentSource?.quality}</span>
+                <span className="text-muted-foreground">{source.quality}</span>
                 <span className="text-brand-primary">•</span>
-                <span className="text-green-400">{currentSource?.voiceovers}</span>
+                <span className="text-green-400">{source.voiceovers}</span>
               </div>
             </div>
             <button
@@ -247,7 +244,7 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
                   <div>
                     <p className="text-lg font-semibold">Загрузка русской озвучки...</p>
                     <p className="text-sm text-muted-foreground mt-2">
-                      {currentSource?.name} • {currentSource?.voiceovers}
+                      {source.name} • {source.voiceovers}
                     </p>
                   </div>
                 </div>
