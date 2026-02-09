@@ -7,7 +7,7 @@ import { getMovieDetails, getTVDetails, getImageUrl, getTrailerUrl } from '../se
 import { useWatchlist } from '../contexts/WatchlistContext';
 import { LoadingSpinner, ErrorMessage } from '../components/LoadingSpinner';
 import { MovieCard } from '../components/MovieCard';
-import { KinoBDPlayer } from '../components/KinoBDPlayer';
+import { MultiSourcePlayer } from '../components/MultiSourcePlayer';
 
 export const MovieDetailPage = () => {
   const { mediaType, id } = useParams();
