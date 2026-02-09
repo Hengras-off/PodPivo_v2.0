@@ -3,11 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Play, Plus, Check, X, ChevronLeft, Tv } from 'lucide-react';
 import ReactPlayer from 'react-player';
-import { getMovieDetails, getTVDetails, getImageUrl, getTrailerUrl } from '../services/tmdb';
+import { getMovieDetails, getTVDetails, getImageUrl, getTrailerUrl, fetchKinopoiskIdFromIMDB } from '../services/tmdb';
 import { useWatchlist } from '../contexts/WatchlistContext';
 import { LoadingSpinner, ErrorMessage } from '../components/LoadingSpinner';
 import { MovieCard } from '../components/MovieCard';
-import { MultiSourcePlayer } from '../components/MultiSourcePlayer';
+import { RussianPlayer } from '../components/RussianPlayer';
 
 export const MovieDetailPage = () => {
   const { mediaType, id } = useParams();
@@ -17,6 +17,7 @@ export const MovieDetailPage = () => {
   const [error, setError] = useState(null);
   const [showTrailer, setShowTrailer] = useState(false);
   const [showPlayer, setShowPlayer] = useState(false);
+  const [kinopoiskId, setKinopoiskId] = useState(null);
   const { isInWatchlist, addToWatchlist, removeFromWatchlist } = useWatchlist();
 
   useEffect(() => {
