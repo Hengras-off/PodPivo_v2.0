@@ -109,35 +109,25 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
     findKinopoiskId();
   }, [findKinopoiskId]);
 
-  // Генерируем URL для Kodik когда есть kinopoiskId
-  useEffect(() => {
-    if (kinopoiskId) {
-      // Kodik embed URL формат
-      const kodikEmbedUrl = `//kodik.info/find-player?kinopoiskId=${kinopoiskId}&only_translations=&strict=false&autoplay=true`;
-      setKodikUrl(kodikEmbedUrl);
-    }
-  }, [kinopoiskId]);
-
   // Collaps - единственный источник с русской озвучкой
-  const sources = [
-    {
-      name: 'Collaps',
-      getUrl: () => {
-        if (kinopoiskId) {
-          return `//api.delivembd.ws/embed/kp/${kinopoiskId}`;
-        }
-        if (imdbId) {
-          return `//api.delivembd.ws/embed/imdb/${imdbId}`;
-        }
-        return null;
-      },
-      description: 'Множество озвучек',
-      icon: '🎬',
-      quality: 'HD/Full HD',
-      voiceovers: 'Русская озвучка',
-      requiresKpId: false
-    }
-  ];
+  const source = {
+    name: 'Collaps',
+    getUrl: () => {
+      if (kinopoiskId) {
+        return `//api.delivembd.ws/embed/kp/${kinopoiskId}`;
+      }
+      if (imdbId) {
+        return `//api.delivembd.ws/embed/imdb/${imdbId}`;
+      }
+      return null;
+    },
+    description: 'Множество озвучек',
+    icon: '🎬',
+    quality: 'HD/Full HD',
+    voiceovers: 'Русская озвучка'
+  };
+
+  const embedUrl = source.getUrl();
 
   // Фильтруем доступные источники
   const availableSources = sources.filter(source => {
