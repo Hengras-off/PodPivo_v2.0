@@ -252,7 +252,7 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
             )}
 
             <iframe
-              key={`${selectedSource}-${embedUrl}`}
+              key={embedUrl}
               src={embedUrl}
               className="w-full h-full"
               frameBorder="0"
@@ -273,10 +273,9 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
                   <Languages className="w-6 h-6 text-green-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1 space-y-1">
                     <p className="font-bold text-green-400 text-sm">
-                      Kinopoisk ID найден: {kinopoiskId}
+                      Kinopoisk ID: {kinopoiskId}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Все источники с иконкой 🎬 используют базу русских озвучек.
                       Выбирайте озвучку внутри плеера если доступно несколько вариантов.
                     </p>
                   </div>
@@ -284,16 +283,32 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
               </div>
             )}
 
-            {!kinopoiskId && (
+            {!kinopoiskId && imdbId && (
+              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <Languages className="w-6 h-6 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1 space-y-1">
+                    <p className="font-bold text-blue-400 text-sm">
+                      IMDB ID: {imdbId}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Используется IMDB ID для поиска озвучки.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {!kinopoiskId && !imdbId && (
               <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
                 <div className="flex items-start gap-3">
                   <AlertCircle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1 space-y-1">
                     <p className="font-bold text-yellow-400 text-sm">
-                      Kinopoisk ID не найден
+                      ID не найден
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Используются альтернативные источники. Русская озвучка может быть недоступна.
+                      Русская озвучка может быть недоступна.
                     </p>
                     <button
                       onClick={findKinopoiskId}
