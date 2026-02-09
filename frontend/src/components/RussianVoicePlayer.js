@@ -19,7 +19,6 @@ export const RussianVoicePlayer = ({ tmdbId, imdbId, title, year, mediaType, onC
   // Поиск Kinopoisk ID через различные методы
   const findKinopoiskId = useCallback(async () => {
     setSearchingKp(true);
-    setError(null);
     
     try {
       // Метод 1: Поиск через Kinopoisk Unofficial API по IMDB ID
