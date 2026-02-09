@@ -288,9 +288,9 @@ export const RussianPlayer = ({ imdbId, tmdbId, kinopoiskId, title, year, mediaT
             
             <div className="flex items-center justify-between flex-wrap gap-2 text-muted-foreground">
               <div className="text-xs space-x-2">
-                <span>💡 Совет: Используйте Kodik или HDVB для лучшего качества</span>
+                <span>💡 VidSrc Pro - самый точный. Kodik - поиск по названию</span>
+                <span className="opacity-60">| TMDB: {tmdbId}</span>
                 {imdbId && <span className="opacity-60">| IMDB: {imdbId}</span>}
-                {kinopoiskId && <span className="opacity-60">| KP: {kinopoiskId}</span>}
               </div>
               {kinopoiskId && (
                 <a
