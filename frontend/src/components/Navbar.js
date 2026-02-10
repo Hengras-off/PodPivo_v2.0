@@ -42,7 +42,7 @@ export const Navbar = ({ onSearchClick, onAuthClick }) => {
           {/* Logo */}
           <Link to="/" className="flex items-center" data-testid="logo-link">
             <h1 className="text-3xl font-extrabold tracking-tighter text-brand-primary">
-              STREAMX
+              PodPivo
             </h1>
           </Link>
 
