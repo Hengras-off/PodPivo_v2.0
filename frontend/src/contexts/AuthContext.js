@@ -1,69 +1,88 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
-  }
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
   return context;
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); // { email, name }
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('streamx_user');
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (e) {
-        localStorage.removeItem('streamx_user');
+    const unsub = onAuthStateChanged(auth, (fbUser) => {
+      if (fbUser) {
+        setUser({
+          email: fbUser.email,
+          name: fbUser.displayName || (fbUser.email ? fbUser.email.split("@")[0] : "User"),
+        });
+      } else {
+        setUser(null);
       }
-    }
-    setLoading(false);
+      setLoading(false);
+    });
+    return unsub;
   }, []);
 
-  const login = (email, password) => {
-    const users = JSON.parse(localStorage.getItem('streamx_users') || '[]');
-    const foundUser = users.find(u => u.email === email && u.password === password);
-    
-    if (foundUser) {
-      const userData = { email: foundUser.email, name: foundUser.name };
-      setUser(userData);
-      localStorage.setItem('streamx_user', JSON.stringify(userData));
+  const login = async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
       return { success: true };
+    } catch (e) {
+      return { success: false, error: humanAuthError(e) };
     }
-    return { success: false, error: 'Неверный email или пароль' };
   };
 
-  const signup = (name, email, password) => {
-    const users = JSON.parse(localStorage.getItem('streamx_users') || '[]');
-    
-    if (users.find(u => u.email === email)) {
-      return { success: false, error: 'Пользователь с таким email уже существует' };
+  const signup = async (name, email, password) => {
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      if (name) await updateProfile(cred.user, { displayName: name });
+      return { success: true };
+    } catch (e) {
+      return { success: false, error: humanAuthError(e) };
     }
-
-    const newUser = { name, email, password };
-    users.push(newUser);
-    localStorage.setItem('streamx_users', JSON.stringify(users));
-    
-    const userData = { email, name };
-    setUser(userData);
-    localStorage.setItem('streamx_user', JSON.stringify(userData));
-    return { success: true };
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('streamx_user');
+  const logout = async () => {
+    await signOut(auth);
   };
 
-  return (
-    <AuthContext.Provider value={{ user, login, signup, logout, loading }}>
-      {children}
-    </AuthContext.Provider>
+  const resetPassword = async (email) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      return { success: true };
+    } catch (e) {
+      return { success: false, error: humanAuthError(e) };
+    }
+  };
+
+  const value = useMemo(
+    () => ({ user, login, signup, logout, resetPassword, loading }),
+    [user, loading]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+function humanAuthError(e) {
+  const code = e?.code || "";
+  if (code === "auth/invalid-email") return "Неверный email";
+  if (code === "auth/user-not-found") return "Пользователь не найден";
+  if (code === "auth/wrong-password") return "Неверный пароль";
+  if (code === "auth/email-already-in-use") return "Этот email уже зарегистрирован";
+  if (code === "auth/weak-password") return "Слишком простой пароль (минимум 6 символов)";
+  if (code === "auth/too-many-requests") return "Слишком много попыток, попробуйте позже";
+  return "Ошибка авторизации";
+}
