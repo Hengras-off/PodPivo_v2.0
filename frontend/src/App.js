@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { WatchlistProvider } from './contexts/WatchlistContext';
@@ -41,8 +41,8 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <WatchlistProvider>
-          <BrowserRouter basename={process.env.PUBLIC_URL}>
-  <div className="App min-h-screen">
+          <HashRouter>
+            <div className="App min-h-screen">
               <Navbar 
                 onSearchClick={() => setSearchModalOpen(true)}
                 onAuthClick={() => setAuthModalOpen(true)}
@@ -65,7 +65,7 @@ function App() {
                 onClose={() => setSearchModalOpen(false)} 
               />
             </div>
-          </BrowserRouter>
+          </HashRouter>
         </WatchlistProvider>
       </AuthProvider>
     </ThemeProvider>
