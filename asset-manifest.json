@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/PodPivo_v2.0/static/css/main.c1527faa.css",
-    "main.js": "/PodPivo_v2.0/static/js/main.3affe022.js",
+    "main.css": "/PodPivo_v2.0/static/css/main.72991327.css",
+    "main.js": "/PodPivo_v2.0/static/js/main.57e44729.js",
     "reactPlayerHls.js": "/PodPivo_v2.0/static/js/reactPlayerHls.086fe7b3.chunk.js",
     "reactPlayerDash.js": "/PodPivo_v2.0/static/js/reactPlayerDash.09df7c75.chunk.js",
     "reactPlayerMux.js": "/PodPivo_v2.0/static/js/reactPlayerMux.c3e813be.chunk.js",
@@ -16,8 +16,8 @@
     "static/js/365.0b325384.chunk.js": "/PodPivo_v2.0/static/js/365.0b325384.chunk.js",
     "static/js/788.ca42cf6f.chunk.js": "/PodPivo_v2.0/static/js/788.ca42cf6f.chunk.js",
     "index.html": "/PodPivo_v2.0/index.html",
-    "main.c1527faa.css.map": "/PodPivo_v2.0/static/css/main.c1527faa.css.map",
-    "main.3affe022.js.map": "/PodPivo_v2.0/static/js/main.3affe022.js.map",
+    "main.72991327.css.map": "/PodPivo_v2.0/static/css/main.72991327.css.map",
+    "main.57e44729.js.map": "/PodPivo_v2.0/static/js/main.57e44729.js.map",
     "reactPlayerHls.086fe7b3.chunk.js.map": "/PodPivo_v2.0/static/js/reactPlayerHls.086fe7b3.chunk.js.map",
     "reactPlayerDash.09df7c75.chunk.js.map": "/PodPivo_v2.0/static/js/reactPlayerDash.09df7c75.chunk.js.map",
     "reactPlayerMux.c3e813be.chunk.js.map": "/PodPivo_v2.0/static/js/reactPlayerMux.c3e813be.chunk.js.map",
@@ -33,7 +33,7 @@
     "788.ca42cf6f.chunk.js.map": "/PodPivo_v2.0/static/js/788.ca42cf6f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c1527faa.css",
-    "static/js/main.3affe022.js"
+    "static/css/main.72991327.css",
+    "static/js/main.57e44729.js"
   ]
 }
