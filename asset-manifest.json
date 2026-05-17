@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/PodPivo_v2.0/static/css/main.1e99fdcc.css",
-    "main.js": "/PodPivo_v2.0/static/js/main.5b9724e3.js",
+    "main.css": "/PodPivo_v2.0/static/css/main.f5ee4551.css",
+    "main.js": "/PodPivo_v2.0/static/js/main.af07ae0c.js",
     "index.html": "/PodPivo_v2.0/index.html",
-    "main.1e99fdcc.css.map": "/PodPivo_v2.0/static/css/main.1e99fdcc.css.map",
-    "main.5b9724e3.js.map": "/PodPivo_v2.0/static/js/main.5b9724e3.js.map"
+    "main.f5ee4551.css.map": "/PodPivo_v2.0/static/css/main.f5ee4551.css.map",
+    "main.af07ae0c.js.map": "/PodPivo_v2.0/static/js/main.af07ae0c.js.map"
   },
   "entrypoints": [
-    "static/css/main.1e99fdcc.css",
-    "static/js/main.5b9724e3.js"
+    "static/css/main.f5ee4551.css",
+    "static/js/main.af07ae0c.js"
   ]
 }
