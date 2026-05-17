@@ -2,10 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { getImageUrl, getTitle, getReleaseYear } from '../services/tmdb';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Check, Play } from 'lucide-react';
+import { Plus, Check, Play, Youtube } from 'lucide-react';
 import { useWatchlist } from '../contexts/WatchlistContext';
 
-export const MovieCard = ({ movie, index = 0 }) => {
+export const MovieCard = ({ movie, index = 0, onTrailerClick }) => {
   const navigate = useNavigate();
   const { isInWatchlist, addToWatchlist, removeFromWatchlist } = useWatchlist();
 
@@ -23,6 +23,12 @@ export const MovieCard = ({ movie, index = 0 }) => {
     } else {
       addToWatchlist({ ...movie, media_type: mediaType });
     }
+  };
+
+  const handleTrailerClick = (e) => {
+    e.stopPropagation();
+    // Переходим на страницу деталей с флагом открыть трейлер
+    navigate(`/detail/${mediaType}/${movie.id}`, { state: { openTrailer: true } });
   };
 
   return (
@@ -64,6 +70,15 @@ export const MovieCard = ({ movie, index = 0 }) => {
           >
             <Play className="w-4 h-4 fill-current" />
             <span>Смотреть</span>
+          </button>
+          <button
+            onClick={handleTrailerClick}
+            className="p-2 bg-red-600/80 hover:bg-red-600 rounded-md transition-colors"
+            data-testid={`trailer-button-${movie.id}`}
+            aria-label="Трейлер"
+            title="Смотреть трейлер"
+          >
+            <Youtube className="w-4 h-4 text-white" />
           </button>
           <button
             onClick={handleWatchlistToggle}
