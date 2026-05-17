@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/PodPivo_v2.0/static/css/main.72991327.css",
+    "main.css": "/PodPivo_v2.0/static/css/main.b1a04e8b.css",
     "main.js": "/PodPivo_v2.0/static/js/main.57e44729.js",
     "reactPlayerHls.js": "/PodPivo_v2.0/static/js/reactPlayerHls.086fe7b3.chunk.js",
     "reactPlayerDash.js": "/PodPivo_v2.0/static/js/reactPlayerDash.09df7c75.chunk.js",
@@ -16,7 +16,7 @@
     "static/js/365.0b325384.chunk.js": "/PodPivo_v2.0/static/js/365.0b325384.chunk.js",
     "static/js/788.ca42cf6f.chunk.js": "/PodPivo_v2.0/static/js/788.ca42cf6f.chunk.js",
     "index.html": "/PodPivo_v2.0/index.html",
-    "main.72991327.css.map": "/PodPivo_v2.0/static/css/main.72991327.css.map",
+    "main.b1a04e8b.css.map": "/PodPivo_v2.0/static/css/main.b1a04e8b.css.map",
     "main.57e44729.js.map": "/PodPivo_v2.0/static/js/main.57e44729.js.map",
     "reactPlayerHls.086fe7b3.chunk.js.map": "/PodPivo_v2.0/static/js/reactPlayerHls.086fe7b3.chunk.js.map",
     "reactPlayerDash.09df7c75.chunk.js.map": "/PodPivo_v2.0/static/js/reactPlayerDash.09df7c75.chunk.js.map",
@@ -33,7 +33,7 @@
     "788.ca42cf6f.chunk.js.map": "/PodPivo_v2.0/static/js/788.ca42cf6f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.72991327.css",
+    "static/css/main.b1a04e8b.css",
     "static/js/main.57e44729.js"
   ]
 }
