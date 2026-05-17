@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Play, Plus, Check, X, ChevronLeft, Tv } from 'lucide-react';
-import ReactPlayer from 'react-player';
-import { getMovieDetails, getTVDetails, getImageUrl, getTrailerUrl } from '../services/tmdb';
+import { Play, Plus, Check, ChevronLeft, Tv, Youtube } from 'lucide-react';
+import { getMovieDetails, getTVDetails, getImageUrl } from '../services/tmdb';
+import { TrailerModal, getAllTrailers } from '../components/TrailerModal';
 import { useWatchlist } from '../contexts/WatchlistContext';
 import { LoadingSpinner, ErrorMessage } from '../components/LoadingSpinner';
 import { MovieCard } from '../components/MovieCard';
@@ -12,6 +12,7 @@ import { RussianVoicePlayer } from '../components/RussianVoicePlayer';
 export const MovieDetailPage = () => {
   const { mediaType, id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,11 +39,18 @@ export const MovieDetailPage = () => {
     fetchDetails();
   }, [mediaType, id]);
 
+  // Авто-открытие трейлера если пришли с MovieCard
+  useEffect(() => {
+    if (location.state?.openTrailer && details) {
+      setShowTrailer(true);
+    }
+  }, [location.state, details]);
+
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorMessage message={error} />;
   if (!details) return <ErrorMessage message="Контент не найден" />;
 
-  const trailerUrl = getTrailerUrl(details.videos);
+  const trailers = getAllTrailers(details.videos);
   const inWatchlist = isInWatchlist(details.id);
   const similar = details.similar?.results || details.recommendations?.results || [];
 
@@ -129,14 +137,19 @@ export const MovieDetailPage = () => {
                 <span>Смотреть онлайн</span>
               </button>
 
-              {trailerUrl && (
+              {trailers.length > 0 && (
                 <button
                   onClick={() => setShowTrailer(true)}
                   className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-md px-6 py-3 font-medium transition-colors border border-white/10 flex items-center space-x-2"
                   data-testid="play-trailer-button"
                 >
-                  <Play className="w-5 h-5 fill-current" />
+                  <Youtube className="w-5 h-5 text-red-500" />
                   <span>Трейлер</span>
+                  {trailers.length > 1 && (
+                    <span className="bg-white/20 text-xs px-1.5 py-0.5 rounded-full">
+                      {trailers.length}
+                    </span>
+                  )}
                 </button>
               )}
 
@@ -209,41 +222,12 @@ export const MovieDetailPage = () => {
       </div>
 
       {/* Trailer Modal */}
-      {showTrailer && trailerUrl && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 p-4"
-          onClick={() => setShowTrailer(false)}
-          data-testid="trailer-modal"
-        >
-          <div
-            className="relative w-full max-w-5xl aspect-video"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setShowTrailer(false)}
-              className="absolute -top-12 right-0 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors z-10"
-              data-testid="close-trailer-button"
-              aria-label="Закрыть"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            <ReactPlayer
-              url={trailerUrl}
-              playing
-              controls
-              width="100%"
-              height="100%"
-              config={{
-                youtube: {
-                  playerVars: { autoplay: 1 }
-                }
-              }}
-            />
-          </div>
-        </motion.div>
+      {showTrailer && (
+        <TrailerModal
+          videos={details.videos}
+          title={details.title || details.name}
+          onClose={() => setShowTrailer(false)}
+        />
       )}
 
       {/* Russian Voice Player Modal */}
